@@ -10,6 +10,8 @@
 
 ---
 
+gh auth setup-git && git push origin master
+
 ## Arquitectura
 
 Este proyecto implementa una arquitectura **modular por Bounded Contexts** con una estructura simplificada:
