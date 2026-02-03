@@ -190,16 +190,13 @@ export interface OrdenReparacion {
 
 export interface Tecnico {
   id: string
-  userId: string
+  nombre: string
+  telefono?: string
+  email?: string
   especialidad?: string
   certificacion?: string
   fechaContratacion?: string
   activo: boolean
   createdAt: string
   updatedAt: string
-  user?: {
-    id: string
-    name: string
-    email: string
-  }
 }

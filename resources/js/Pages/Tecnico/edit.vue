@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { ref } from 'vue'
 import { router, useForm } from '@inertiajs/vue3'
 import { route } from 'ziggy-js'
 import type { Tecnico } from '../../types'
@@ -7,26 +6,23 @@ import FormField from '../../components/FormField.vue'
 
 const props = defineProps<{
   tecnico: Tecnico
-  usuarios: Array<{
-    id: string
-    name: string
-    email: string
-  }>
 }>()
 
 const form = useForm({
+  nombre: props.tecnico.nombre || '',
+  telefono: props.tecnico.telefono || '',
+  email: props.tecnico.email || '',
   especialidad: props.tecnico.especialidad || '',
   certificacion: props.tecnico.certificacion || '',
   fecha_contratacion: props.tecnico.fechaContratacion || '',
   activo: props.tecnico.activo ?? true
 })
 
-const isSubmitting = ref(false)
-
 const handleSubmit = () => {
   form.put(route('tecnicos.update', props.tecnico.id), {
-    onSuccess: () => {
-      router.visit(route('tecnicos.index'))
+    preserveScroll: true,
+    onError: (errors) => {
+      console.error('Errores de validación:', errors)
     }
   })
 }
@@ -39,7 +35,7 @@ const handleCancel = () => {
 <template>
   <div class="space-y-6 p-6">
     <div class="flex justify-between items-center">
-      <h1 class="text-3xl font-bold">Editar Tecnico</h1>
+      <h1 class="text-3xl font-bold">Editar Técnico</h1>
       <button @click="handleCancel" class="px-4 py-2 bg-gray-200 rounded-lg hover:bg-gray-300">
         Volver
       </button>
@@ -50,35 +46,60 @@ const handleCancel = () => {
         <div class="grid grid-cols-2 gap-4">
           <div>
             <span class="text-sm text-gray-500">ID:</span>
-            <span class="font-medium">{{ tecnico.id }}</span>
-          </div>
-          <div>
-            <span class="text-sm text-gray-500">Usuario:</span>
-            <span class="font-medium">{{ tecnico.user?.name || '-' }}</span>
-          </div>
-          <div>
-            <span class="text-sm text-gray-500">Email:</span>
-            <span class="font-medium">{{ tecnico.user?.email || '-' }}</span>
+            <span class="font-medium ml-2">{{ tecnico.id }}</span>
           </div>
           <div>
             <span class="text-sm text-gray-500">Creado:</span>
-            <span class="font-medium">{{ tecnico.createdAt }}</span>
+            <span class="font-medium ml-2">{{ tecnico.createdAt }}</span>
           </div>
         </div>
       </div>
 
       <form @submit.prevent="handleSubmit" class="space-y-6">
-        <FormField label="Especialidad" name="especialidad" :error="form.errors.especialidad" hint="Especialidad tecnica del tecnico">
+        <FormField label="Nombre" name="nombre" :error="form.errors.nombre" required>
+          <input
+            v-model="form.nombre"
+            type="text"
+            class="w-full px-3 py-2 border border-gray-300 rounded-lg"
+            :class="{ 'border-red-500': form.errors.nombre }"
+            placeholder="Nombre completo del técnico"
+            required
+          />
+        </FormField>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <FormField label="Teléfono" name="telefono" :error="form.errors.telefono">
+            <input
+              v-model="form.telefono"
+              type="tel"
+              class="w-full px-3 py-2 border border-gray-300 rounded-lg"
+              :class="{ 'border-red-500': form.errors.telefono }"
+              placeholder="Ej: 0991234567"
+            />
+          </FormField>
+
+          <FormField label="Email" name="email" :error="form.errors.email">
+            <input
+              v-model="form.email"
+              type="email"
+              class="w-full px-3 py-2 border border-gray-300 rounded-lg"
+              :class="{ 'border-red-500': form.errors.email }"
+              placeholder="correo@ejemplo.com"
+            />
+          </FormField>
+        </div>
+
+        <FormField label="Especialidad" name="especialidad" :error="form.errors.especialidad" hint="Especialidad técnica del técnico">
           <input
             v-model="form.especialidad"
             type="text"
             class="w-full px-3 py-2 border border-gray-300 rounded-lg"
             :class="{ 'border-red-500': form.errors.especialidad }"
-            placeholder="Ej: Reparacion de pantallas, microsoldadura, etc."
+            placeholder="Ej: Reparación de pantallas, microsoldadura, etc."
           />
         </FormField>
 
-        <FormField label="Certificacion" name="certificacion" :error="form.errors.certificacion" hint="Numero de certificacion o licencia">
+        <FormField label="Certificación" name="certificacion" :error="form.errors.certificacion" hint="Número de certificación o licencia">
           <input
             v-model="form.certificacion"
             type="text"
@@ -88,7 +109,7 @@ const handleCancel = () => {
           />
         </FormField>
 
-        <FormField label="Fecha de Contratacion" name="fecha_contratacion" :error="form.errors.fecha_contratacion">
+        <FormField label="Fecha de Contratación" name="fecha_contratacion" :error="form.errors.fecha_contratacion">
           <input
             v-model="form.fecha_contratacion"
             type="date"
@@ -111,11 +132,11 @@ const handleCancel = () => {
         <div class="flex items-center gap-3 pt-4">
           <button
             type="submit"
-            :disabled="isSubmitting"
+            :disabled="form.processing"
             class="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50"
           >
-            <span v-if="isSubmitting">Guardando...</span>
-            <span v-else>Actualizar Tecnico</span>
+            <span v-if="form.processing">Guardando...</span>
+            <span v-else>Actualizar Técnico</span>
           </button>
           <button
             type="button"

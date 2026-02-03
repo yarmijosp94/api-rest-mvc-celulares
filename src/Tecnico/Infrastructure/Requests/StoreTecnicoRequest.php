@@ -11,19 +11,12 @@ class StoreTecnicoRequest extends FormRequest
         return true;
     }
 
-    protected function prepareForValidation()
-    {
-        // Soporta tanto camelCase (API) como snake_case (formularios web)
-        $this->merge([
-            'user_id' => $this->user_id ?? $this->userId,
-            'fecha_contratacion' => $this->fecha_contratacion ?? $this->fechaContratacion,
-        ]);
-    }
-
     public function rules(): array
     {
         return [
-            'user_id' => 'required|uuid|exists:users,id|unique:tecnicos,user_id',
+            'nombre' => 'required|string|max:255',
+            'telefono' => 'nullable|string|max:20',
+            'email' => 'nullable|email|max:255',
             'especialidad' => 'nullable|string|max:255',
             'certificacion' => 'nullable|string|max:255',
             'fecha_contratacion' => 'nullable|date|before_or_equal:today',
@@ -34,7 +27,9 @@ class StoreTecnicoRequest extends FormRequest
     public function attributes(): array
     {
         return [
-            'user_id' => 'usuario',
+            'nombre' => 'nombre',
+            'telefono' => 'teléfono',
+            'email' => 'correo electrónico',
             'especialidad' => 'especialidad',
             'certificacion' => 'certificación',
             'fecha_contratacion' => 'fecha de contratación',
@@ -45,9 +40,9 @@ class StoreTecnicoRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'user_id.required' => 'El usuario es obligatorio',
-            'user_id.exists' => 'El usuario no existe',
-            'user_id.unique' => 'Este usuario ya está registrado como técnico',
+            'nombre.required' => 'El nombre es obligatorio',
+            'nombre.max' => 'El nombre no puede exceder 255 caracteres',
+            'email.email' => 'El correo electrónico no es válido',
             'fecha_contratacion.before_or_equal' => 'La fecha de contratación no puede ser futura'
         ];
     }

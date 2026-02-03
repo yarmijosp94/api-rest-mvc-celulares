@@ -11,11 +11,13 @@ class TecnicoMapper
     {
         return new Tecnico(
             id: $model->id,
-            userId: $model->user_id,
+            nombre: $model->nombre,
+            telefono: $model->telefono,
+            email: $model->email,
             especialidad: $model->especialidad,
             certificacion: $model->certificacion,
-            fechaContratacion: $model->fecha_contratacion 
-                ? new \DateTimeImmutable($model->fecha_contratacion->toDateString()) 
+            fechaContratacion: $model->fecha_contratacion
+                ? new \DateTimeImmutable($model->fecha_contratacion->toDateString())
                 : null,
             activo: $model->activo,
             createdAt: new \DateTimeImmutable($model->created_at->toDateTimeString()),
@@ -27,7 +29,9 @@ class TecnicoMapper
     {
         return [
             'id' => $tecnico->getId(),
-            'user_id' => $tecnico->getUserId(),
+            'nombre' => $tecnico->getNombre(),
+            'telefono' => $tecnico->getTelefono(),
+            'email' => $tecnico->getEmail(),
             'especialidad' => $tecnico->getEspecialidad(),
             'certificacion' => $tecnico->getCertificacion(),
             'fecha_contratacion' => $tecnico->getFechaContratacion()?->format('Y-m-d'),

@@ -7,7 +7,6 @@ use Src\Tecnico\Infrastructure\Requests\StoreTecnicoRequest;
 use Src\Tecnico\Infrastructure\Requests\UpdateTecnicoRequest;
 use Src\Tecnico\Infrastructure\Models\TecnicoEloquentModel;
 use Src\Tecnico\Infrastructure\Mappers\TecnicoMapper;
-use Src\Auth\Infrastructure\Models\UserEloquentModel;
 use Inertia\Inertia;
 use Inertia\Response;
 use Illuminate\Http\RedirectResponse;
@@ -17,7 +16,7 @@ class TecnicoWebController extends Controller
 {
     public function index(): Response
     {
-        $tecnicos = TecnicoEloquentModel::with('user')->get();
+        $tecnicos = TecnicoEloquentModel::all();
         $tecnicosData = $tecnicos->map(
             fn($model) => TecnicoMapper::toDomain($model)->toArray()
         )->toArray();
@@ -44,16 +43,7 @@ class TecnicoWebController extends Controller
 
     public function create(): Response
     {
-        $usuarios = UserEloquentModel::all();
-        $usuariosData = $usuarios->map(fn($u) => [
-            'id' => $u->id,
-            'name' => $u->name,
-            'email' => $u->email
-        ])->toArray();
-
-        return Inertia::render('Tecnico/create', [
-            'usuarios' => $usuariosData
-        ]);
+        return Inertia::render('Tecnico/create');
     }
 
     public function store(StoreTecnicoRequest $request): RedirectResponse
@@ -77,12 +67,7 @@ class TecnicoWebController extends Controller
         $tecnico = TecnicoEloquentModel::findOrFail($id);
 
         return Inertia::render('Tecnico/edit', [
-            'tecnico' => TecnicoMapper::toDomain($tecnico)->toArray(),
-            'usuarios' => UserEloquentModel::all()->map(fn($u) => [
-                'id' => $u->id,
-                'name' => $u->name,
-                'email' => $u->email
-            ])->toArray()
+            'tecnico' => TecnicoMapper::toDomain($tecnico)->toArray()
         ]);
     }
 

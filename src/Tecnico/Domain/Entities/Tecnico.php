@@ -7,7 +7,9 @@ use DateTimeImmutable;
 class Tecnico
 {
     private string $id;
-    private string $userId;
+    private string $nombre;
+    private ?string $telefono;
+    private ?string $email;
     private ?string $especialidad;
     private ?string $certificacion;
     private ?DateTimeImmutable $fechaContratacion;
@@ -17,7 +19,9 @@ class Tecnico
 
     public function __construct(
         string $id,
-        string $userId,
+        string $nombre,
+        ?string $telefono,
+        ?string $email,
         ?string $especialidad,
         ?string $certificacion,
         ?DateTimeImmutable $fechaContratacion,
@@ -26,7 +30,9 @@ class Tecnico
         DateTimeImmutable $updatedAt
     ) {
         $this->id = $id;
-        $this->userId = $userId;
+        $this->nombre = $nombre;
+        $this->telefono = $telefono;
+        $this->email = $email;
         $this->especialidad = $especialidad;
         $this->certificacion = $certificacion;
         $this->fechaContratacion = $fechaContratacion;
@@ -40,9 +46,19 @@ class Tecnico
         return $this->id;
     }
 
-    public function getUserId(): string
+    public function getNombre(): string
     {
-        return $this->userId;
+        return $this->nombre;
+    }
+
+    public function getTelefono(): ?string
+    {
+        return $this->telefono;
+    }
+
+    public function getEmail(): ?string
+    {
+        return $this->email;
     }
 
     public function getEspecialidad(): ?string
@@ -75,6 +91,21 @@ class Tecnico
         return $this->updatedAt;
     }
 
+    public function updateNombre(string $nombre): void
+    {
+        $this->nombre = $nombre;
+    }
+
+    public function updateTelefono(?string $telefono): void
+    {
+        $this->telefono = $telefono;
+    }
+
+    public function updateEmail(?string $email): void
+    {
+        $this->email = $email;
+    }
+
     public function updateEspecialidad(?string $especialidad): void
     {
         $this->especialidad = $especialidad;
@@ -99,7 +130,9 @@ class Tecnico
     {
         return [
             'id' => $this->id,
-            'userId' => $this->userId,
+            'nombre' => $this->nombre,
+            'telefono' => $this->telefono,
+            'email' => $this->email,
             'especialidad' => $this->especialidad,
             'certificacion' => $this->certificacion,
             'fechaContratacion' => $this->fechaContratacion?->format('Y-m-d'),

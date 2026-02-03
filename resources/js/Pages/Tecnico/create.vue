@@ -1,31 +1,23 @@
 <script setup lang="ts">
-import { ref } from 'vue'
 import { router, useForm } from '@inertiajs/vue3'
 import { route } from 'ziggy-js'
 import FormField from '../../components/FormField.vue'
 
-const props = defineProps<{
-  usuarios: Array<{
-    id: string
-    name: string
-    email: string
-  }>
-}>()
-
 const form = useForm({
-  user_id: '',
+  nombre: '',
+  telefono: '',
+  email: '',
   especialidad: '',
   certificacion: '',
   fecha_contratacion: '',
   activo: true
 })
 
-const isSubmitting = ref(false)
-
 const handleSubmit = () => {
   form.post(route('tecnicos.store'), {
-    onSuccess: () => {
-      router.visit(route('tecnicos.index'))
+    preserveScroll: true,
+    onError: (errors) => {
+      console.error('Errores de validación:', errors)
     }
   })
 }
@@ -46,19 +38,38 @@ const handleCancel = () => {
 
     <div class="bg-white rounded-lg shadow p-6">
       <form @submit.prevent="handleSubmit" class="space-y-6">
-        <FormField label="Usuario" name="user_id" :error="form.errors.user_id" required>
-          <select
-            v-model="form.user_id"
+        <FormField label="Nombre" name="nombre" :error="form.errors.nombre" required>
+          <input
+            v-model="form.nombre"
+            type="text"
             class="w-full px-3 py-2 border border-gray-300 rounded-lg"
-            :class="{ 'border-red-500': form.errors.user_id }"
+            :class="{ 'border-red-500': form.errors.nombre }"
+            placeholder="Nombre completo del técnico"
             required
-          >
-            <option value="">Seleccione un usuario...</option>
-            <option v-for="usuario in usuarios" :key="usuario.id" :value="usuario.id">
-              {{ usuario.name }} ({{ usuario.email }})
-            </option>
-          </select>
+          />
         </FormField>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <FormField label="Teléfono" name="telefono" :error="form.errors.telefono">
+            <input
+              v-model="form.telefono"
+              type="tel"
+              class="w-full px-3 py-2 border border-gray-300 rounded-lg"
+              :class="{ 'border-red-500': form.errors.telefono }"
+              placeholder="Ej: 0991234567"
+            />
+          </FormField>
+
+          <FormField label="Email" name="email" :error="form.errors.email">
+            <input
+              v-model="form.email"
+              type="email"
+              class="w-full px-3 py-2 border border-gray-300 rounded-lg"
+              :class="{ 'border-red-500': form.errors.email }"
+              placeholder="correo@ejemplo.com"
+            />
+          </FormField>
+        </div>
 
         <FormField label="Especialidad" name="especialidad" :error="form.errors.especialidad" hint="Especialidad técnica del técnico">
           <input
@@ -103,10 +114,10 @@ const handleCancel = () => {
         <div class="flex items-center gap-3 pt-4">
           <button
             type="submit"
-            :disabled="isSubmitting"
+            :disabled="form.processing"
             class="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50"
           >
-            <span v-if="isSubmitting">Guardando...</span>
+            <span v-if="form.processing">Guardando...</span>
             <span v-else>Guardar Técnico</span>
           </button>
           <button

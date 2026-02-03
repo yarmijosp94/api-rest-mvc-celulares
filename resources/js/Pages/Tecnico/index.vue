@@ -121,21 +121,26 @@ const columns: TableColumn<Tecnico>[] = [
       })
   },
   {
-    accessorKey: 'userId',
-    header: 'Usuario',
+    accessorKey: 'nombre',
+    header: 'Técnico',
     cell: ({ row }) => {
       return h('div', { class: 'flex items-center gap-3' }, [
         h(UAvatar, {
-          src: `https://ui-avatars.com/api/?name=${encodeURIComponent(row.original.user?.name || 'Técnico')}&background=random`,
-          alt: row.original.user?.name,
+          src: `https://ui-avatars.com/api/?name=${encodeURIComponent(row.original.nombre || 'Técnico')}&background=random`,
+          alt: row.original.nombre,
           size: 'lg'
         }),
         h('div', undefined, [
-          h('p', { class: 'font-medium text-highlighted' }, row.original.user?.name),
-          h('p', { class: 'text-sm text-gray-500' }, row.original.user?.email)
+          h('p', { class: 'font-medium text-highlighted' }, row.original.nombre),
+          h('p', { class: 'text-sm text-gray-500' }, row.original.email || '-')
         ])
       ])
     }
+  },
+  {
+    accessorKey: 'telefono',
+    header: 'Teléfono',
+    cell: ({ row }) => row.original.telefono || '-'
   },
   {
     accessorKey: 'especialidad',
@@ -160,7 +165,7 @@ const columns: TableColumn<Tecnico>[] = [
         h(UBadge, {
           color: row.original.activo ? 'green' : 'gray',
           variant: row.original.activo ? 'soft' : 'subtle'
-        }, row.original.activo ? 'Activo' : 'Inactivo')
+        }, () => row.original.activo ? 'Activo' : 'Inactivo')
       ])
     }
   },
@@ -327,7 +332,7 @@ const pagination = ref({
   <UModal
     v-model:open="isDeleteModalOpen"
     title="Confirmar eliminación"
-    :description="`¿Está seguro de que desea eliminar el técnico ${tecnicoToDelete?.user?.name}? Esta acción no se puede deshacer.`"
+    :description="`¿Está seguro de que desea eliminar el técnico ${tecnicoToDelete?.nombre}? Esta acción no se puede deshacer.`"
   >
     <template #footer>
       <div class="flex justify-end gap-3">

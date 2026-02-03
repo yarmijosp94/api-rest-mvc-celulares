@@ -4,9 +4,7 @@ namespace Src\Tecnico\Infrastructure\Models;
 
 use App\Traits\HasUuid;
 use Illuminate\Database\Eloquent\Model;
-use Src\Auth\Infrastructure\Models\UserEloquentModel;
 use Src\OrdenReparacion\Infrastructure\Models\OrdenReparacionEloquentModel;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class TecnicoEloquentModel extends Model
@@ -17,7 +15,9 @@ class TecnicoEloquentModel extends Model
 
     protected $fillable = [
         'id',
-        'user_id',
+        'nombre',
+        'telefono',
+        'email',
         'especialidad',
         'certificacion',
         'fecha_contratacion',
@@ -31,13 +31,8 @@ class TecnicoEloquentModel extends Model
         'updated_at' => 'datetime',
     ];
 
-    public function user(): BelongsTo
-    {
-        return $this->belongsTo(UserEloquentModel::class, 'user_id', 'id');
-    }
-
     public function ordenesReparacion(): HasMany
     {
-        return $this->hasMany(OrdenReparacionEloquentModel::class, 'tecnico_id', 'user_id');
+        return $this->hasMany(OrdenReparacionEloquentModel::class, 'tecnico_id', 'id');
     }
 }
