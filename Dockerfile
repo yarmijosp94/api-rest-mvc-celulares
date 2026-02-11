@@ -38,14 +38,24 @@ RUN npm install
 # Copiar el resto del código
 COPY . .
 
+# Crear .env temporal para el build (las variables reales se inyectan en runtime por Railway)
+RUN cp .env.example .env && php artisan key:generate
+
 # Ejecutar scripts de composer
 RUN composer run-script post-autoload-dump || true
 
 # Build de assets
 RUN npm run build
 
+# Crear directorios de storage necesarios
+RUN mkdir -p storage/framework/{sessions,views,cache} \
+    && chmod -R 775 storage bootstrap/cache
+
 # Puerto
 EXPOSE 8080
 
-# Comando de inicio (cachea configuración en runtime cuando DATABASE_URL está disponible)
-CMD php artisan config:clear && php artisan migrate --force && php artisan db:seed --force && php artisan serve --host=0.0.0.0 --port=${PORT:-8080}
+# Script de inicio
+COPY docker-entrypoint.sh /docker-entrypoint.sh
+RUN chmod +x /docker-entrypoint.sh
+
+CMD ["/docker-entrypoint.sh"]
