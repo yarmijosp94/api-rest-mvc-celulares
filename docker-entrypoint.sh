@@ -4,7 +4,7 @@ set -e
 # Limpiar cache de configuración vieja y recachear con las variables de Railway
 php artisan config:clear
 php artisan config:cache
-php artisan route:cache
+php artisan route:cache || echo "Warning: route:cache failed, continuing without route cache"
 php artisan view:cache
 
 # Ejecutar migraciones
