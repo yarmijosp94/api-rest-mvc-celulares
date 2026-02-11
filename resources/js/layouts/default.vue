@@ -47,6 +47,11 @@ const links = [[{
   to: '/ordenes-reparacion',
   onSelect: () => navigateTo('/ordenes-reparacion')
 }, {
+  label: 'Productos',
+  icon: 'i-lucide-box',
+  to: '/productos',
+  onSelect: () => navigateTo('/productos')
+}, {
   label: 'Repuestos',
   icon: 'i-lucide-package',
   to: '/repuestos',
