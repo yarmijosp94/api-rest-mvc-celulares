@@ -27,17 +27,17 @@ const links = [[{
   to: '/dashboard',
   onSelect: () => navigateTo('/dashboard')
 }, {
-  label: 'Clientes',
+  label: 'Customers',
   icon: 'i-lucide-users-round',
   to: '/clientes',
   onSelect: () => navigateTo('/clientes')
 }, {
-  label: 'Equipos',
+  label: 'Teams',
   icon: 'i-lucide-smartphone',
   to: '/equipos',
   onSelect: () => navigateTo('/equipos')
 }, {
-        label: 'Técnicos',
+        label: 'Technicians',
   icon: 'i-lucide-user-cog',
   to: '/tecnicos',
   onSelect: () => navigateTo('/tecnicos')

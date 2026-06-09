@@ -283,7 +283,7 @@ const pagination = ref({
             <UButton
               label="Mostrar"
               color="neutral"
-              variant="outline"
+              variant="soft"
               trailing-icon="i-lucide-settings-2"
             />
           </UDropdownMenu>
