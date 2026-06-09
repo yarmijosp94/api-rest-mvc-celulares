@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="keywords" content="desarrollo web, HTML, CSS, JavaScript">
+    <meta name="description" content="Esta es una página de ejemplo para aprender desarrollo web.">
+    <meta name="author" content="TecLEMAS">
+    <title>Mi Página</title>
+</head>
+<body>
+    <header>
+        <h1>Sistema de Gestión Académica</h1>
+        <p>Bienvenido al sistema de gestión académica. Aquí podrás gestionar tus cursos, estudiantes y profesores de manera eficiente.</p>
+        
+        <nav aria-label="menu-principal">
+            <ul>
+                <li><a href="https://vitec.teclemas.edu.ec/my/courses.php" target="_blank">Inicio</a></li>
+                <li><a href="#">Cursos</a></li>
+                <li><a href="#">Estudiantes</a></li>
+                <li><a href="#">Profesores</a></li>
+                <li><a href="#">Contacto</a></li>
+            </ul>
+        </nav>
+
+    </header>
+
+    <main>
+        <section aria-label="introducción">
+            <h2>Bienvenidos al portal académico</h2>
+            <p>Este portal está diseñado para facilitar la gestión de cursos, 
+               <b>estudiantes</b> y <b>profesores</b>. Aquí encontrarás toda la información 
+                necesaria para administrar tus <strong>actividades académicas</strong> 
+                de manera eficiente.
+            </p>
+            <p>Explora las diferentes secciones para obtener 
+                <a href="https://vitec.teclemas.edu.ec/my/courses.php">más información</a> 
+                sobre nuestros cursos,
+                estudiantes y profesores.
+            </p>
+
+        </section>
+
+        <section aria-label="cursos">
+            <h2>Formulario de inscripción</h2>
+            <form action="#" method="post">
+                <fieldset>
+                    <legend>Información del estudiante</legend>
+
+                    <p>
+                        <label for="nombre">Nombre:</label>
+                        <input type="text" id="nombre" name="nombre" size="3">
+                    </p>
+
+                    <p>
+                        <label for="apellido">Apellido:</label>
+                        <input type="text" id="apellido" name="apellido" >
+                    </p>
+
+                    <p>
+                        <label for="email">Correo electrónico:</label>
+                        <input type="email" id="email" name="email" >
+                    </p>
+
+                    <p>
+                        <label for="identificacion">Número de identificación:</label>
+                        <input type="text" id="identificacion" name="identificacion" >
+                    </p>
+
+                    <p>
+                        <label for="fechaNacimiento">Fecha de nacimiento:</label>
+                        <input type="date" id="fechaNacimiento" name="fechaNacimiento" >
+                    </p>
+
+                    <p>
+                        <label for="genero">Género:</label>
+                        <label>
+                            <input type="radio" name="genero" value="masculino" > Masculino
+                        </label>
+                        <label>
+                            <input type="radio" name="genero" value="femenino" > Femenino
+                        </label>
+                    </p>
+
+                    <p>
+                        <label for="Lugar de Nacimento">Lugar de Nacimiento:</label>
+                        <select id="lugarNacimiento" name="lugarNacimiento" >
+                            <option value="">Seleccione una opción</option>
+                            <option value="quito">Quito</option>
+                            <option value="guayaquil">Guayaquil</option>
+                            <option value="cuenca">Cuenca</option>
+                            <option value="machala">Machala</option>
+                        </select>
+                    </p>
+                </fieldset>
+
+                <fieldset>
+                    <legend>Información del curso</legend>
+
+                    <p>
+                        <label for="curso">Curso:</label>
+                        <select id="curso" name="curso" >
+                            <option value="">Seleccione un curso</option>
+                            <option value="matematicas">Matemáticas</option>
+                            <option value="literatura">Literatura</option>
+                            <option value="ciencias">Ciencias</option>
+                            <option value="historia">Historia</option>
+                        </select>
+                    </p>
+
+                    <p>
+                        <label for="nivel">Nivel:</label>
+                        <select id="nivel" name="nivel" >
+                            <option value="">Seleccione un nivel</option>
+                            <option value="basico">Básico</option>
+                            <option value="intermedio">Intermedio</option>
+                            <option value="avanzado">Avanzado</option>
+                        </select>
+                    </p>
+
+                    <p>
+                        <label for="semestre">Semestre:</label>
+                        <input type="number" id="semestre" name="semestre" min="1" max="8" >
+                    </p>
+
+                    <p>
+                        <label for="busqueda">Busqueda</label>
+                        <input type="search" id="busqueda" name="busqueda" placeholder="Buscar curso...">
+                    </p>
+                </fieldset>
+
+                <br>
+            
+                <button type="submit">Enviar</button>
+                <button type="reset">Limpiar</button>
+            </form>
+            
+        </section>
+
+        <section aria-label="estudiantes">
+            <h2>Listado de estudiantes</h2>
+            <p>A continuación se muestra un listado de estudiantes inscritos en el sistema:</p>
+
+            <table border="1">
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Apellido</th>
+                        <th>Correo electrónico</th>
+                        <th>Número de identificación</th>
+                        <th>Fecha de nacimiento</th>
+                        <th>Género</th>
+                        <th>Lugar de nacimiento</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr>
+                        <td>Juan</td>
+                        <td>Pérez</td>
+                        <td>juan.perez@example.com</td>
+                        <td>1234567890</td>
+                        <td>2000-01-01</td>
+                        <td>Masculino</td>
+                        <td>Quito</td>
+                    </tr>
+                    <tr>
+                        <td>María</td>
+                        <td>Gómez</td>
+                        <td>maria@gmail.com</td>
+                        <td>0987654321</td>
+                        <td>1999-05-15</td>
+                        <td>Femenino</td>
+                        <td>Guayaquil</td>
+                    </tr>
+                    <tr>
+                        <td>Carlos</td>
+                        <td>Rodríguez</td>
+                        <td>carlos.rodriguez@example.com</td>
+                        <td>1122334455</td>
+                        <td>2001-07-20</td>
+                        <td>Masculino</td>
+                        <td>Cuenca</td>
+                    </tr>
+                </tbody>
+
+                <tfoot>
+                    <tr>
+                        <td colspan="7" >Total de estudiantes: 3</td>
+                    </tr>
+                </tfoot>
+                
+            </table>
+        </section>
+
+    </main>
+</body>
+</html>
